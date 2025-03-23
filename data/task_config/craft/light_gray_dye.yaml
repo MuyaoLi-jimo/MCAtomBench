@@ -1,0 +1,19 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: white_tulip
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft light_gray_dye
+  max_reward_times: 1
+  objects:
+  - light_gray_dye
+  reward: 1.0
+task_conf:
+- name: light_gray_dye
+  text: craft_item:light_gray_dye

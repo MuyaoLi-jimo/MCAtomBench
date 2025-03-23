@@ -1,0 +1,33 @@
+command: []
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: diamond_axe
+inventory_distraction_level: normal
+mobs:
+  name: wither_skeleton
+  number: 1
+  range_x:
+  - -1
+  - 1
+  range_z:
+  - 2
+  - 8
+reward_conf:
+- event: kill_entity
+  identity: kill_entity:wither_skeleton
+  max_reward_times: 1
+  objects:
+  - wither_skeleton
+  reward: 1.0
+seed: 1403770728608262707
+task_conf:
+- name: kill
+  text: kill_entity:wither_skeleton
+teleport:
+  x: -13
+  y: 69
+  z: 3

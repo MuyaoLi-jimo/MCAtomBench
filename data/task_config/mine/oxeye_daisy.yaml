@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_axe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:oxeye_daisy
+  max_reward_times: 1
+  objects:
+  - oxeye_daisy
+  reward: 1.0
+seed: 7972459931808049474
+task_conf:
+- name: mine
+  text: mine_block:oxeye_daisy
+teleport:
+  x: -5130
+  y: 64
+  z: -5474

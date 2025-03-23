@@ -1,0 +1,33 @@
+command: []
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: diamond_sword
+inventory_distraction_level: normal
+mobs:
+  name: ghast
+  number: 1
+  range_x:
+  - -1
+  - 1
+  range_z:
+  - 2
+  - 8
+reward_conf:
+- event: kill_entity
+  identity: kill_entity:ghast
+  max_reward_times: 1
+  objects:
+  - ghast
+  reward: 1.0
+seed: 3001859308298079279
+task_conf:
+- name: kill
+  text: kill_entity:ghast
+teleport:
+  x: 31
+  y: 64
+  z: 61

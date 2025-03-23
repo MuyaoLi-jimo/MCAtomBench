@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_axe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:cyan_bed
+  max_reward_times: 1
+  objects:
+  - cyan_bed
+  reward: 1.0
+seed: 2024
+task_conf:
+- name: mine
+  text: mine_block:cyan_bed
+teleport:
+  x: -2938
+  y: 70
+  z: -479

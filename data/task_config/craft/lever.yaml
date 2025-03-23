@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: cobblestone
+- quantity: '>=1'
+  slot: random
+  type: stick
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft lever
+  max_reward_times: 1
+  objects:
+  - lever
+  reward: 1.0
+task_conf:
+- name: lever
+  text: craft_item:lever

@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=3'
+  slot: random
+  type: stick
+- quantity: '>=2'
+  slot: random
+  type: string
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft fishing_rod
+  max_reward_times: 1
+  objects:
+  - fishing_rod
+  reward: 1.0
+task_conf:
+- name: fishing_rod
+  text: craft_item:fishing_rod

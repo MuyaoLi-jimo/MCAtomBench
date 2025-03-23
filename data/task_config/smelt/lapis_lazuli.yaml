@@ -1,0 +1,26 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: lapis_ore
+- quantity: 1
+  slot: 0
+  type: furnace
+- quantity: '>3'
+  slot: random
+  type: coal
+inventory_distraction_level: easy
+need_furnace: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft lapis_lazuli
+  max_reward_times: 1
+  objects:
+  - lapis_lazuli
+  reward: 1.0
+task_conf:
+- name: lapis_lazuli
+  text: craft_item:lapis_lazuli

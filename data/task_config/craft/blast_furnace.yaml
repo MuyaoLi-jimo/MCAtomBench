@@ -1,0 +1,28 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=3'
+  slot: random
+  type: smooth_stone
+- quantity: '>=1'
+  slot: random
+  type: furnace
+- quantity: '>=5'
+  slot: random
+  type: iron_ingot
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft blast_furnace
+  max_reward_times: 1
+  objects:
+  - blast_furnace
+  reward: 1.0
+task_conf:
+- name: blast_furnace
+  text: craft_item:blast_furnace

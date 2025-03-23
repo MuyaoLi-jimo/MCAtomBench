@@ -1,0 +1,26 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: sea_pickle
+- quantity: 1
+  slot: 0
+  type: furnace
+- quantity: '>3'
+  slot: random
+  type: coal
+inventory_distraction_level: easy
+need_furnace: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft lime_dye
+  max_reward_times: 1
+  objects:
+  - lime_dye
+  reward: 1.0
+task_conf:
+- name: lime_dye
+  text: craft_item:lime_dye

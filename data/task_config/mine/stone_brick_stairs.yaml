@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: diamond_pickaxe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:stone_brick_stairs
+  max_reward_times: 1
+  objects:
+  - stone_brick_stairs
+  reward: 1.0
+seed: 2025
+task_conf:
+- name: mine
+  text: mine_block:stone_brick_stairs
+teleport:
+  x: 341
+  y: 68
+  z: 995

@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: iron_ingot
+- quantity: '>=1'
+  slot: random
+  type: flint
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft flint_and_steel
+  max_reward_times: 1
+  objects:
+  - flint_and_steel
+  reward: 1.0
+task_conf:
+- name: flint_and_steel
+  text: craft_item:flint_and_steel

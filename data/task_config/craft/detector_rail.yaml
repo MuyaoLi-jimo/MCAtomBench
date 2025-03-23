@@ -1,0 +1,28 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: redstone
+- quantity: '>=1'
+  slot: random
+  type: stone_pressure_plate
+- quantity: '>=6'
+  slot: random
+  type: iron_ingot
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft detector_rail
+  max_reward_times: 1
+  objects:
+  - detector_rail
+  reward: 1.0
+task_conf:
+- name: detector_rail
+  text: craft_item:detector_rail

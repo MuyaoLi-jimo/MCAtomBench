@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: diorite
+- quantity: '>=1'
+  slot: random
+  type: quartz
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft granite
+  max_reward_times: 1
+  objects:
+  - granite
+  reward: 1.0
+task_conf:
+- name: granite
+  text: craft_item:granite

@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=8'
+  slot: random
+  type: paper
+- quantity: '>=1'
+  slot: random
+  type: compass
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft map
+  max_reward_times: 1
+  objects:
+  - map
+  reward: 1.0
+task_conf:
+- name: map
+  text: craft_item:map

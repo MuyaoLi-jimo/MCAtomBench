@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: book
+- quantity: '>=1'
+  slot: random
+  type: ink_sac
+- quantity: '>=1'
+  slot: random
+  type: feather
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft writable_book
+  max_reward_times: 1
+  objects:
+  - writable_book
+  reward: 1.0
+task_conf:
+- name: writable_book
+  text: craft_item:writable_book

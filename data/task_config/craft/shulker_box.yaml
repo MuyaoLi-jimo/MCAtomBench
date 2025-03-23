@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: chest
+- quantity: '>=2'
+  slot: random
+  type: shulker_shell
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft shulker_box
+  max_reward_times: 1
+  objects:
+  - shulker_box
+  reward: 1.0
+task_conf:
+- name: shulker_box
+  text: craft_item:shulker_box

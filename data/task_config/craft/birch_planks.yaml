@@ -1,0 +1,19 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: stripped_birch_log
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft birch_planks
+  max_reward_times: 1
+  objects:
+  - birch_planks
+  reward: 1.0
+task_conf:
+- name: birch_planks
+  text: craft_item:birch_planks

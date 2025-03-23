@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: blaze_powder
+- quantity: '>=1'
+  slot: random
+  type: slime_ball
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft magma_cream
+  max_reward_times: 1
+  objects:
+  - magma_cream
+  reward: 1.0
+task_conf:
+- name: magma_cream
+  text: craft_item:magma_cream

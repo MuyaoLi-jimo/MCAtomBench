@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=4'
+  slot: random
+  type: stick
+- quantity: '>=2'
+  slot: random
+  type: dark_oak_planks
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft dark_oak_fence_gate
+  max_reward_times: 1
+  objects:
+  - dark_oak_fence_gate
+  reward: 1.0
+task_conf:
+- name: dark_oak_fence_gate
+  text: craft_item:dark_oak_fence_gate

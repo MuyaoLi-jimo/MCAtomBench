@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=8'
+  slot: random
+  type: nautilus_shell
+- quantity: '>=1'
+  slot: random
+  type: heart_of_the_sea
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft conduit
+  max_reward_times: 1
+  objects:
+  - conduit
+  reward: 1.0
+task_conf:
+- name: conduit
+  text: craft_item:conduit

@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=8'
+  slot: random
+  type: glass
+- quantity: '>=1'
+  slot: random
+  type: brown_dye
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft brown_stained_glass
+  max_reward_times: 1
+  objects:
+  - brown_stained_glass
+  reward: 1.0
+task_conf:
+- name: brown_stained_glass
+  text: craft_item:brown_stained_glass

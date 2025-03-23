@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=5'
+  slot: random
+  type: gold_ingot
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft golden_helmet
+  max_reward_times: 1
+  objects:
+  - golden_helmet
+  reward: 1.0
+task_conf:
+- name: golden_helmet
+  text: craft_item:golden_helmet

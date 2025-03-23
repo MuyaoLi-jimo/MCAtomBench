@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=7'
+  slot: random
+  type: leather
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft leather_horse_armor
+  max_reward_times: 1
+  objects:
+  - leather_horse_armor
+  reward: 1.0
+task_conf:
+- name: leather_horse_armor
+  text: craft_item:leather_horse_armor

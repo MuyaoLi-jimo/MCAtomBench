@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_shovel
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:dirt
+  max_reward_times: 1
+  objects:
+  - dirt
+  reward: 1.0
+seed: 2025
+task_conf:
+- name: mine
+  text: mine_block:dirt
+teleport:
+  x: 398
+  y: 80
+  z: 1122

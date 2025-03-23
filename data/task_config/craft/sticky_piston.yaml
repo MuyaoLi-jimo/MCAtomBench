@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: piston
+- quantity: '>=1'
+  slot: random
+  type: slime_ball
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft sticky_piston
+  max_reward_times: 1
+  objects:
+  - sticky_piston
+  reward: 1.0
+task_conf:
+- name: sticky_piston
+  text: craft_item:sticky_piston

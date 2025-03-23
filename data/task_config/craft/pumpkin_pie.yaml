@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: pumpkin
+- quantity: '>=1'
+  slot: random
+  type: sugar
+- quantity: '>=1'
+  slot: random
+  type: egg
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft pumpkin_pie
+  max_reward_times: 1
+  objects:
+  - pumpkin_pie
+  reward: 1.0
+task_conf:
+- name: pumpkin_pie
+  text: craft_item:pumpkin_pie

@@ -1,0 +1,26 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: nether_quartz_ore
+- quantity: 1
+  slot: 0
+  type: furnace
+- quantity: '>3'
+  slot: random
+  type: coal
+inventory_distraction_level: easy
+need_furnace: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft quartz
+  max_reward_times: 1
+  objects:
+  - quartz
+  reward: 1.0
+task_conf:
+- name: quartz
+  text: craft_item:quartz

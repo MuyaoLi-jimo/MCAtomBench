@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_pickaxe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:rail
+  max_reward_times: 1
+  objects:
+  - rail
+  reward: 1.0
+seed: 114514
+task_conf:
+- name: mine
+  text: mine_block:rail
+teleport:
+  x: 1
+  y: 23
+  z: -63.819

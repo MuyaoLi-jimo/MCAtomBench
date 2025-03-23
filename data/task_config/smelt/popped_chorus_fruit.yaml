@@ -1,0 +1,26 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: chorus_fruit
+- quantity: 1
+  slot: 0
+  type: furnace
+- quantity: '>3'
+  slot: random
+  type: coal
+inventory_distraction_level: easy
+need_furnace: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft popped_chorus_fruit
+  max_reward_times: 1
+  objects:
+  - popped_chorus_fruit
+  reward: 1.0
+task_conf:
+- name: popped_chorus_fruit
+  text: craft_item:popped_chorus_fruit

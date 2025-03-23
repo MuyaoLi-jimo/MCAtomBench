@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=6'
+  slot: random
+  type: brown_stained_glass
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft brown_stained_glass_pane
+  max_reward_times: 1
+  objects:
+  - brown_stained_glass_pane
+  reward: 1.0
+task_conf:
+- name: brown_stained_glass_pane
+  text: craft_item:brown_stained_glass_pane

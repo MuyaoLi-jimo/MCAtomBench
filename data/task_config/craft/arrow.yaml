@@ -1,0 +1,28 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: stick
+- quantity: '>=1'
+  slot: random
+  type: flint
+- quantity: '>=1'
+  slot: random
+  type: feather
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft arrow
+  max_reward_times: 1
+  objects:
+  - arrow
+  reward: 1.0
+task_conf:
+- name: arrow
+  text: craft_item:arrow

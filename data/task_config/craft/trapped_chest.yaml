@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: chest
+- quantity: '>=1'
+  slot: random
+  type: tripwire_hook
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft trapped_chest
+  max_reward_times: 1
+  objects:
+  - trapped_chest
+  reward: 1.0
+task_conf:
+- name: trapped_chest
+  text: craft_item:trapped_chest

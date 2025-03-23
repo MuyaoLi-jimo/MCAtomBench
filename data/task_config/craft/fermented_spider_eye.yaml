@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: spider_eye
+- quantity: '>=1'
+  slot: random
+  type: brown_mushroom
+- quantity: '>=1'
+  slot: random
+  type: sugar
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft fermented_spider_eye
+  max_reward_times: 1
+  objects:
+  - fermented_spider_eye
+  reward: 1.0
+task_conf:
+- name: fermented_spider_eye
+  text: craft_item:fermented_spider_eye

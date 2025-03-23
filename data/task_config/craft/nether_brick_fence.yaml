@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=4'
+  slot: random
+  type: nether_bricks
+- quantity: '>=2'
+  slot: random
+  type: nether_brick
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft nether_brick_fence
+  max_reward_times: 1
+  objects:
+  - nether_brick_fence
+  reward: 1.0
+task_conf:
+- name: nether_brick_fence
+  text: craft_item:nether_brick_fence

@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: paper
+- quantity: '>=1'
+  slot: random
+  type: enchanted_golden_apple
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft mojang_banner_pattern
+  max_reward_times: 1
+  objects:
+  - mojang_banner_pattern
+  reward: 1.0
+task_conf:
+- name: mojang_banner_pattern
+  text: craft_item:mojang_banner_pattern

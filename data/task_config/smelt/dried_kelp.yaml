@@ -1,0 +1,26 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: kelp
+- quantity: 1
+  slot: 0
+  type: furnace
+- quantity: '>3'
+  slot: random
+  type: coal
+inventory_distraction_level: easy
+need_furnace: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft dried_kelp
+  max_reward_times: 1
+  objects:
+  - dried_kelp
+  reward: 1.0
+task_conf:
+- name: dried_kelp
+  text: craft_item:dried_kelp

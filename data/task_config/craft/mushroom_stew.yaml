@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: brown_mushroom
+- quantity: '>=1'
+  slot: random
+  type: red_mushroom
+- quantity: '>=1'
+  slot: random
+  type: bowl
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft mushroom_stew
+  max_reward_times: 1
+  objects:
+  - mushroom_stew
+  reward: 1.0
+task_conf:
+- name: mushroom_stew
+  text: craft_item:mushroom_stew

@@ -1,0 +1,19 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=2'
+  slot: random
+  type: gray_wool
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft gray_carpet
+  max_reward_times: 1
+  objects:
+  - gray_carpet
+  reward: 1.0
+task_conf:
+- name: gray_carpet
+  text: craft_item:gray_carpet

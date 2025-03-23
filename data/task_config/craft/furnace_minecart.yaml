@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: furnace
+- quantity: '>=1'
+  slot: random
+  type: minecart
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft furnace_minecart
+  max_reward_times: 1
+  objects:
+  - furnace_minecart
+  reward: 1.0
+task_conf:
+- name: furnace_minecart
+  text: craft_item:furnace_minecart

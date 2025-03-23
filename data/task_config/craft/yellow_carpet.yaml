@@ -1,0 +1,19 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=2'
+  slot: random
+  type: yellow_wool
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft yellow_carpet
+  max_reward_times: 1
+  objects:
+  - yellow_carpet
+  reward: 1.0
+task_conf:
+- name: yellow_carpet
+  text: craft_item:yellow_carpet

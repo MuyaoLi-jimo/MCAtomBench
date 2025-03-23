@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=8'
+  slot: random
+  type: obsidian
+- quantity: '>=1'
+  slot: random
+  type: ender_eye
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft ender_chest
+  max_reward_times: 1
+  objects:
+  - ender_chest
+  reward: 1.0
+task_conf:
+- name: ender_chest
+  text: craft_item:ender_chest

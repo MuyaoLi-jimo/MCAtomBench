@@ -1,0 +1,19 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: wither_rose
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft black_dye
+  max_reward_times: 1
+  objects:
+  - black_dye
+  reward: 1.0
+task_conf:
+- name: black_dye
+  text: craft_item:black_dye

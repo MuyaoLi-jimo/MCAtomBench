@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_pickaxe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:pumpkin
+  max_reward_times: 1
+  objects:
+  - pumpkin
+  reward: 1.0
+seed: 2024
+task_conf:
+- name: mine
+  text: mine_block:pumpkin
+teleport:
+  x: -2272
+  y: 77
+  z: -414

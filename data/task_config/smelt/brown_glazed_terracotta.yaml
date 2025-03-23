@@ -1,0 +1,26 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: brown_terracotta
+- quantity: 1
+  slot: 0
+  type: furnace
+- quantity: '>3'
+  slot: random
+  type: coal
+inventory_distraction_level: easy
+need_furnace: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft brown_glazed_terracotta
+  max_reward_times: 1
+  objects:
+  - brown_glazed_terracotta
+  reward: 1.0
+task_conf:
+- name: brown_glazed_terracotta
+  text: craft_item:brown_glazed_terracotta

@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=6'
+  slot: random
+  type: acacia_planks
+- quantity: '>=1'
+  slot: random
+  type: stick
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft acacia_sign
+  max_reward_times: 1
+  objects:
+  - acacia_sign
+  reward: 1.0
+task_conf:
+- name: acacia_sign
+  text: craft_item:acacia_sign

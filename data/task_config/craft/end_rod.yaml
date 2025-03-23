@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: popped_chorus_fruit
+- quantity: '>=1'
+  slot: random
+  type: blaze_rod
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft end_rod
+  max_reward_times: 1
+  objects:
+  - end_rod
+  reward: 1.0
+task_conf:
+- name: end_rod
+  text: craft_item:end_rod

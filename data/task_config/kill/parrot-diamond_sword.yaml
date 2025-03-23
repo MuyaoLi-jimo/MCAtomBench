@@ -1,0 +1,33 @@
+command: []
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: diamond_sword
+inventory_distraction_level: normal
+mobs:
+  name: parrot
+  number: 1
+  range_x:
+  - -1
+  - 1
+  range_z:
+  - 2
+  - 8
+reward_conf:
+- event: kill_entity
+  identity: kill_entity:parrot
+  max_reward_times: 1
+  objects:
+  - parrot
+  reward: 1.0
+seed: 3595531610718549062
+task_conf:
+- name: kill
+  text: kill_entity:parrot
+teleport:
+  x: 131
+  y: 74
+  z: -22

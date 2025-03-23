@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: wooden_shovel
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:sand_stone
+  max_reward_times: 1
+  objects:
+  - sand_stone
+  reward: 1.0
+seed: 7972459931808049474
+task_conf:
+- name: mine
+  text: mine_block:sand_stone
+teleport:
+  x: -661
+  y: 60
+  z: 3185.7

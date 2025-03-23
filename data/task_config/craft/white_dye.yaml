@@ -1,0 +1,19 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: bone_meal
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft white_dye
+  max_reward_times: 1
+  objects:
+  - white_dye
+  reward: 1.0
+task_conf:
+- name: white_dye
+  text: craft_item:white_dye

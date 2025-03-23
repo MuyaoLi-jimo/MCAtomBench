@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: stone_pickaxe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:acacia_slab
+  max_reward_times: 1
+  objects:
+  - acacia_slab
+  reward: 1.0
+seed: 7972459931808049474
+task_conf:
+- name: mine
+  text: mine_block:acacia_slab
+teleport:
+  x: 101
+  y: 68
+  z: 3840

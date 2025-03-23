@@ -1,0 +1,28 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: charcoal
+- quantity: '>=1'
+  slot: random
+  type: stick
+- quantity: '>=1'
+  slot: random
+  type: soul_sand
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft soul_torch
+  max_reward_times: 1
+  objects:
+  - soul_torch
+  reward: 1.0
+task_conf:
+- name: soul_torch
+  text: craft_item:soul_torch

@@ -1,0 +1,28 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: jungle_planks
+- quantity: '>=1'
+  slot: random
+  type: stick
+- quantity: '>=1'
+  slot: random
+  type: iron_ingot
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft tripwire_hook
+  max_reward_times: 1
+  objects:
+  - tripwire_hook
+  reward: 1.0
+task_conf:
+- name: tripwire_hook
+  text: craft_item:tripwire_hook

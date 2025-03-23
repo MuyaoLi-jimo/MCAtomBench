@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: wooden_axe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:crafting_table
+  max_reward_times: 1
+  objects:
+  - crafting_table
+  reward: 1.0
+seed: 1404809164
+task_conf:
+- name: mine
+  text: mine_block:crafting_table
+teleport:
+  x: 212.104
+  y: 73.0625
+  z: 228.078

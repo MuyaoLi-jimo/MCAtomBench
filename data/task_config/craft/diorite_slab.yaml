@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=3'
+  slot: random
+  type: diorite
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft diorite_slab
+  max_reward_times: 1
+  objects:
+  - diorite_slab
+  reward: 1.0
+task_conf:
+- name: diorite_slab
+  text: craft_item:diorite_slab

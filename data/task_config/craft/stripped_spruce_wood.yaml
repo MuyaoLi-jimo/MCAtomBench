@@ -1,0 +1,19 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=4'
+  slot: random
+  type: stripped_spruce_log
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft stripped_spruce_wood
+  max_reward_times: 1
+  objects:
+  - stripped_spruce_wood
+  reward: 1.0
+task_conf:
+- name: stripped_spruce_wood
+  text: craft_item:stripped_spruce_wood

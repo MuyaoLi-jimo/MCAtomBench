@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=8'
+  slot: random
+  type: gold_nugget
+- quantity: '>=1'
+  slot: random
+  type: melon_slice
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft glistering_melon_slice
+  max_reward_times: 1
+  objects:
+  - glistering_melon_slice
+  reward: 1.0
+task_conf:
+- name: glistering_melon_slice
+  text: craft_item:glistering_melon_slice

@@ -1,0 +1,26 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: potato
+- quantity: 1
+  slot: 0
+  type: furnace
+- quantity: '>3'
+  slot: random
+  type: coal
+inventory_distraction_level: easy
+need_furnace: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft baked_potato
+  max_reward_times: 1
+  objects:
+  - baked_potato
+  reward: 1.0
+task_conf:
+- name: baked_potato
+  text: craft_item:baked_potato

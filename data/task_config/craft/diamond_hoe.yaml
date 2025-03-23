@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=2'
+  slot: random
+  type: stick
+- quantity: '>=2'
+  slot: random
+  type: diamond
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft diamond_hoe
+  max_reward_times: 1
+  objects:
+  - diamond_hoe
+  reward: 1.0
+task_conf:
+- name: diamond_hoe
+  text: craft_item:diamond_hoe

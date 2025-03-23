@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_axe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:potted_cactus
+  max_reward_times: 1
+  objects:
+  - potted_cactus
+  reward: 1.0
+seed: 2024
+task_conf:
+- name: mine
+  text: mine_block:potted_cactus
+teleport:
+  x: -2976
+  y: 71
+  z: -471

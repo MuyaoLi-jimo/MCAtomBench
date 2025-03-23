@@ -1,0 +1,19 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=4'
+  slot: random
+  type: jungle_planks
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft crafting_table
+  max_reward_times: 1
+  objects:
+  - crafting_table
+  reward: 1.0
+task_conf:
+- name: crafting_table
+  text: craft_item:crafting_table

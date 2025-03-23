@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: diorite
+- quantity: '>=1'
+  slot: random
+  type: cobblestone
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft andesite
+  max_reward_times: 1
+  objects:
+  - andesite
+  reward: 1.0
+task_conf:
+- name: andesite
+  text: craft_item:andesite

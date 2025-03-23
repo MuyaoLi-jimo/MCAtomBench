@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: paper
+- quantity: '>=1'
+  slot: random
+  type: wither_skeleton_skull
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft skull_banner_pattern
+  max_reward_times: 1
+  objects:
+  - skull_banner_pattern
+  reward: 1.0
+task_conf:
+- name: skull_banner_pattern
+  text: craft_item:skull_banner_pattern

@@ -1,0 +1,28 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=3'
+  slot: random
+  type: stripped_crimson_stem
+- quantity: '>=3'
+  slot: random
+  type: stick
+- quantity: '>=1'
+  slot: random
+  type: coal
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft campfire
+  max_reward_times: 1
+  objects:
+  - campfire
+  reward: 1.0
+task_conf:
+- name: campfire
+  text: craft_item:campfire

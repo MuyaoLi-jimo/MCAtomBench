@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: stone_pickaxe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:smoker
+  max_reward_times: 1
+  objects:
+  - smoker
+  reward: 1.0
+seed: 7972459931808049474
+task_conf:
+- name: mine
+  text: mine_block:smoker
+teleport:
+  x: -407
+  y: 73
+  z: 1179

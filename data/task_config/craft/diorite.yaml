@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=2'
+  slot: random
+  type: quartz
+- quantity: '>=2'
+  slot: random
+  type: cobblestone
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft diorite
+  max_reward_times: 1
+  objects:
+  - diorite
+  reward: 1.0
+task_conf:
+- name: diorite
+  text: craft_item:diorite

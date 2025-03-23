@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_pickaxe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:mossy_stone_bricks_stairs
+  max_reward_times: 1
+  objects:
+  - mossy_stone_bricks_stairs
+  reward: 1.0
+seed: 2025
+task_conf:
+- name: mine
+  text: mine_block:mossy_stone_bricks_stairs
+teleport:
+  x: 345
+  y: 70
+  z: 989

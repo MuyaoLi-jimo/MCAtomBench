@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_axe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:white_carpet
+  max_reward_times: 1
+  objects:
+  - white_carpet
+  reward: 1.0
+seed: 7972459931808049474
+task_conf:
+- name: mine
+  text: mine_block:white_carpet
+teleport:
+  x: -4777
+  y: 64
+  z: -1930

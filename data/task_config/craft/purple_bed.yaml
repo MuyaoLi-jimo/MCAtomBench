@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=3'
+  slot: random
+  type: purple_wool
+- quantity: '>=3'
+  slot: random
+  type: jungle_planks
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft purple_bed
+  max_reward_times: 1
+  objects:
+  - purple_bed
+  reward: 1.0
+task_conf:
+- name: purple_bed
+  text: craft_item:purple_bed

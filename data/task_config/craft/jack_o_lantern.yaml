@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: carved_pumpkin
+- quantity: '>=1'
+  slot: random
+  type: torch
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft jack_o_lantern
+  max_reward_times: 1
+  objects:
+  - jack_o_lantern
+  reward: 1.0
+task_conf:
+- name: jack_o_lantern
+  text: craft_item:jack_o_lantern

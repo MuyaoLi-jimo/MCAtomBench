@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=2'
+  slot: random
+  type: dirt
+- quantity: '>=2'
+  slot: random
+  type: gravel
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft coarse_dirt
+  max_reward_times: 1
+  objects:
+  - coarse_dirt
+  reward: 1.0
+task_conf:
+- name: coarse_dirt
+  text: craft_item:coarse_dirt

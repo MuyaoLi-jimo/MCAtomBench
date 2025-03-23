@@ -1,0 +1,10 @@
+**/log*
+*test*
+**/temp
+*.bak
+*.xlsx
+**/hidden*
+**__pycache__*
+**/mcabench.egg-info*
+toy
+__pycache__/

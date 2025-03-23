@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=3'
+  slot: random
+  type: iron_block
+- quantity: '>=4'
+  slot: random
+  type: iron_ingot
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft anvil
+  max_reward_times: 1
+  objects:
+  - anvil
+  reward: 1.0
+task_conf:
+- name: anvil
+  text: craft_item:anvil

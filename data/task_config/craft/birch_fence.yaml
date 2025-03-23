@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=2'
+  slot: random
+  type: stick
+- quantity: '>=4'
+  slot: random
+  type: birch_planks
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft birch_fence
+  max_reward_times: 1
+  objects:
+  - birch_fence
+  reward: 1.0
+task_conf:
+- name: birch_fence
+  text: craft_item:birch_fence

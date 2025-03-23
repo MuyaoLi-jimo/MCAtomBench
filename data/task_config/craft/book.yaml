@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=3'
+  slot: random
+  type: paper
+- quantity: '>=1'
+  slot: random
+  type: leather
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft book
+  max_reward_times: 1
+  objects:
+  - book
+  reward: 1.0
+task_conf:
+- name: book
+  text: craft_item:book

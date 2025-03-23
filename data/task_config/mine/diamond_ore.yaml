@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_pickaxe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:diamond_ore
+  max_reward_times: 1
+  objects:
+  - diamond_ore
+  reward: 1.0
+seed: 1
+task_conf:
+- name: mine
+  text: mine_block:diamond_ore
+teleport:
+  x: 17950
+  y: 11
+  z: 7506

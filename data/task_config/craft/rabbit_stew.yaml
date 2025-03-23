@@ -1,0 +1,34 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: baked_potato
+- quantity: '>=1'
+  slot: random
+  type: cooked_rabbit
+- quantity: '>=1'
+  slot: random
+  type: bowl
+- quantity: '>=1'
+  slot: random
+  type: carrot
+- quantity: '>=1'
+  slot: random
+  type: brown_mushroom
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft rabbit_stew
+  max_reward_times: 1
+  objects:
+  - rabbit_stew
+  reward: 1.0
+task_conf:
+- name: rabbit_stew
+  text: craft_item:rabbit_stew

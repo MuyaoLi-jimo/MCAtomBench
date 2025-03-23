@@ -1,0 +1,25 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=4'
+  slot: random
+  type: oak_planks
+- quantity: '>=2'
+  slot: random
+  type: paper
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft cartography_table
+  max_reward_times: 1
+  objects:
+  - cartography_table
+  reward: 1.0
+task_conf:
+- name: cartography_table
+  text: craft_item:cartography_table

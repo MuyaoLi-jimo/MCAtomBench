@@ -1,0 +1,28 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: book
+- quantity: '>=4'
+  slot: random
+  type: obsidian
+- quantity: '>=2'
+  slot: random
+  type: diamond
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft enchanting_table
+  max_reward_times: 1
+  objects:
+  - enchanting_table
+  reward: 1.0
+task_conf:
+- name: enchanting_table
+  text: craft_item:enchanting_table

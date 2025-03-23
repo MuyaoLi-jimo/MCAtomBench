@@ -1,0 +1,28 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: blue_dye
+- quantity: '>=4'
+  slot: random
+  type: sand
+- quantity: '>=4'
+  slot: random
+  type: gravel
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft blue_concrete_powder
+  max_reward_times: 1
+  objects:
+  - blue_concrete_powder
+  reward: 1.0
+task_conf:
+- name: blue_concrete_powder
+  text: craft_item:blue_concrete_powder

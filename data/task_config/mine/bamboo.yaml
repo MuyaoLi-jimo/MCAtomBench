@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: iron_axe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:bamboo
+  max_reward_times: 1
+  objects:
+  - bamboo
+  reward: 1.0
+seed: 1
+task_conf:
+- name: mine
+  text: mine_block:bamboo
+teleport:
+  x: 170
+  y: 65
+  z: 69

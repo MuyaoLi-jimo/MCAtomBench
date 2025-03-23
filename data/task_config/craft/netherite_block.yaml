@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=9'
+  slot: random
+  type: netherite_ingot
+- quantity: 1
+  slot: 0
+  type: crafting_table
+need_crafting_table: true
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft netherite_block
+  max_reward_times: 1
+  objects:
+  - netherite_block
+  reward: 1.0
+task_conf:
+- name: netherite_block
+  text: craft_item:netherite_block

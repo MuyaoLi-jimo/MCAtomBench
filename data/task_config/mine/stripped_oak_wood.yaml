@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: diamond_axe
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:stripped_oak_wood
+  max_reward_times: 1
+  objects:
+  - stripped_oak_wood
+  reward: 1.0
+seed: 2025
+task_conf:
+- name: mine
+  text: mine_block:stripped_oak_wood
+teleport:
+  x: 883
+  y: 69
+  z: 609

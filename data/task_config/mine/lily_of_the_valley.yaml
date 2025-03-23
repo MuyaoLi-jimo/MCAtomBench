@@ -1,0 +1,23 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '1'
+  slot: '0'
+  type: shears
+inventory_distraction_level: normal
+reward_conf:
+- event: mine_block
+  identity: mine_block:lily_of_the_valley
+  max_reward_times: 1
+  objects:
+  - lily_of_the_valley
+  reward: 1.0
+seed: 7972459931808049474
+task_conf:
+- name: mine
+  text: mine_block:lily_of_the_valley
+teleport:
+  x: -345.4
+  y: 72
+  z: 2158.8

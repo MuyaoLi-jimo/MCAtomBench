@@ -1,0 +1,22 @@
+defaults:
+- base
+- _self_
+init_inventory:
+- quantity: '>=1'
+  slot: random
+  type: paper
+- quantity: '>=1'
+  slot: random
+  type: creeper_head
+need_crafting_table: false
+need_gui: true
+reward_conf:
+- event: craft_item
+  identity: craft creeper_banner_pattern
+  max_reward_times: 1
+  objects:
+  - creeper_banner_pattern
+  reward: 1.0
+task_conf:
+- name: creeper_banner_pattern
+  text: craft_item:creeper_banner_pattern
