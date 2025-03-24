@@ -47,7 +47,7 @@ class RT2_AGENT(base_agent.Agent):
         self.action_tokenizer = action_mapping.OneActionTokenizer(tokenizer_type=self.LLM_backbone)
         
         self.prompt_library = load_json_file(Path(__file__).parents[3]/"data"/"assets"/"instructions.json") #存储我写好的instructions
-        self.recipe_fold=Path(__file__).parent[3]/"data"/"assets"/"recipes" # 存储所有recipes的文件夹
+        self.recipe_fold=Path(__file__).parents[3]/"data"/"assets"/"recipes" # 存储所有recipes的文件夹
         self.recipes = dict()  #制作方案集合
         self.method_map = {
             True: "crafting table",

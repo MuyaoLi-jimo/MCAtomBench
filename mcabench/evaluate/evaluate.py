@@ -2,7 +2,7 @@
 Author: Muyao 2350076251@qq.com
 Date: 2025-03-23 23:15:37
 LastEditors: Muyao 2350076251@qq.com
-LastEditTime: 2025-03-24 02:32:52
+LastEditTime: 2025-03-24 03:50:06
 '''
 """
 任务清单：
@@ -21,7 +21,7 @@ import ray
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.entry import CameraConfig
 from mcabench.minestudio_plus.simulator.callbacks import (
-    RecordCallback2,
+    RecordCallback,
     FastResetCallback2,
     InitInventoryCallback,
     SummonMobsCallback,
@@ -53,7 +53,9 @@ def evaluate(video_path,evaluate_config:dict, agent_config:dict):
     
     # 写入callback
     camera_cfg = CameraConfig(**env_cfg.camera_config)
-    record_callback = RecordCallback2(record_path=Path(video_path).parent, fps=30,show_actions=False,record_actions=True,record_infos=True)  
+    record_callback = RecordCallback(record_path=Path(video_path).parent, fps=30, 
+                                      show_actions= "action" in evaluate_config["demo"],show_instruction="instruction" in evaluate_config["demo"],
+                                      record_actions=evaluate_config["record"],record_infos=evaluate_config["record"],record_raw_observation=(not evaluate_config["demo"] or evaluate_config["record"]))  
     callbacks = [
         FastResetCallback2(
             biomes=env_cfg.candidate_preferred_spawn_biome,
@@ -127,7 +129,7 @@ def evaluate(video_path,evaluate_config:dict, agent_config:dict):
     for i in range(evaluate_config["max_frames"]):
         instructions = agent.get_instructions(env,env_cfg)
         observations = agent.get_observations(env,info)
-        action = agent.forward(observations=observations,instructions=instructions,verbos=evaluate_config["verbos"],need_crafting_table = need_crafting_table)
+        action = agent.forward(observations=observations,instructions=instructions,verbos=evaluate_config["verbos"])
         if evaluate_config["verbos"]:
             console.Console().log(action)
         obs, reward, terminated, truncated, info = env.step(action)
@@ -202,6 +204,8 @@ if __name__ == "__main__":
     parser.add_argument('--video-main-fold',type=str)
     parser.add_argument('--max-frames', type=int, default=200) 
     parser.add_argument('--verbos', type=bool, default=False)
+    parser.add_argument('--demo', type=str, default="") 
+    parser.add_argument('--record', type=bool, default=False)
     
     parser.add_argument('--model-path', type=str)
     
@@ -231,6 +235,8 @@ if __name__ == "__main__":
         env_config = args.env_config,
         max_frames = args.max_frames,
         verbos = args.verbos,
+        demo=args.demo,
+        record = args.record,
     )
     
     if args.workers==0:
@@ -239,7 +245,7 @@ if __name__ == "__main__":
         evaluate(video_path=video_path,evaluate_config = evaluate_config, agent_config=agent_config)
     elif args.workers==1:
         video_path = f"{args.model_path.split('/')[-1]}-{args.env_config.split('/')[-1]}.mp4"
-        evaluate(video_path=f"{args.model_path.split('/')[-1]}-{args.env_config.split('/')[-1]}.mp4",evaluate_config = evaluate_config,agent_config=agent_config)
+        evaluate(video_path=video_path,evaluate_config = evaluate_config,agent_config=agent_config)
     elif args.workers>1:
         multi_evaluate(args,agent_config=agent_config,evaluate_config=evaluate_config)
         
