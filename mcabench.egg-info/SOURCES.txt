@@ -1,7 +1,0 @@
-README.md
-setup.py
-mcabench.egg-info/PKG-INFO
-mcabench.egg-info/SOURCES.txt
-mcabench.egg-info/dependency_links.txt
-mcabench.egg-info/requires.txt
-mcabench.egg-info/top_level.txt
