@@ -1,7 +1,8 @@
 import abc
 
 class Agent(abc.ABC):
-    def __init__(self):
+    def __init__(self,**kwargs):
+        super().__init__(**kwargs)
         self._action_type = "agent"
         pass
     

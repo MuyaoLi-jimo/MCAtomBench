@@ -10,8 +10,8 @@ from collections import Counter
 import numpy as np
 from transformers import AutoTokenizer
 
-from mcabench.agents.vla import action_mapping, load_model, processor_wrapper
-from mcabench.agents import base_agent
+from mcabench.agents.vla import action_mapping, load_model
+from mcabench.agents import base_agent,vllm_client
 from mcabench.utils.file_utils import load_json_file
 
 #################
@@ -32,14 +32,20 @@ BASE_INSTRUCTION_TEMPLATE = [
     "I need you to craft {} right now.",
 ]
 
-class RT2_AGENT(base_agent.Agent):
+class RT2_AGENT(base_agent.Agent,vllm_client.VllmClient):
     def __init__(self, model_path, base_url, api_key="EMPTY",
                  history_num=0,action_chunk_len=1, bpe=0,
                  instruction_type:Literal['simple','recipe','normal'] = 'normal',
                  temperature=0.5,max_tokens=1024,
                  **kwargs):
         
-        super().__init__()
+        super().__init__(
+            api_key=api_key,
+            base_url=base_url,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            **kwargs
+        )
         self._action_type = "agent"
         
         self.model_path = model_path
@@ -48,39 +54,24 @@ class RT2_AGENT(base_agent.Agent):
         
         self.prompt_library = load_json_file(Path(__file__).parents[3]/"data"/"assets"/"instructions.json") #存储我写好的instructions
         self.recipe_fold=Path(__file__).parents[3]/"data"/"assets"/"recipes" # 存储所有recipes的文件夹
-        self.recipes = dict()  #制作方案集合
-        self.method_map = {
-            True: "crafting table",
-            False: "inventory",
-        }
-        
-        self.processor_wrapper = processor_wrapper.ProcessorWrapper(None,model_name=self.VLM_backbone)
+        self.recipes = dict()  #制作方案集合        
        
         self.actions = []
         self.action_chunk_len=action_chunk_len  # 一次返回一个action chunk
         # 用于带有记忆的agent
         self.history_num = history_num
         self.history = []
-        self.api_key = api_key
-        self.base_url = base_url
-        self.client = OpenAI(
-            api_key=api_key,
-            base_url=base_url,
-        )
-        models = self.client.models.list()
-        self.model = models.data[0].id
         
-        self.temperature = temperature
-        self.max_tokens = max_tokens
         self.instruction_type = instruction_type
         
         self.tokenizer = None
-        
         if self.LLM_backbone in {"llama-3","llama-2","qwen2_vl"}:
             self.tokenizer = AutoTokenizer.from_pretrained(
                 model_path,  
                 trust_remote_code=True,
             )
+            
+        self.set_processor_wrapper()
 
     def reset(self):
         self.history = []
@@ -219,7 +210,7 @@ class RT2_AGENT(base_agent.Agent):
                 return action
         messages = []
         image = self.processor_wrapper.create_image_input(observations[0]) 
-        prompts = []
+
         detailed_instruction = self.create_detailed_instruction(instructions[0])
         thought= self.create_thought(instructions[0]) if self.instruction_type =="recipe" else ""
 
@@ -249,22 +240,9 @@ class RT2_AGENT(base_agent.Agent):
             prompt_input = detailed_instruction + prompt_input
 
         messages.append(self.processor_wrapper.create_message_vllm(role="user",input_type="image",prompt=[prompt_input],image=[image]))
+
+        outputs = self.generate(messages=messages,verbos=verbos)
         
-        open_logprobs = False
-        if verbos:
-            print(prompts)
-            open_logprobs = True
-
-        chat_completion = self.client.chat.completions.create(
-            messages=messages,
-            model=self.model,
-            temperature=self.temperature,
-            max_tokens=self.max_tokens,
-            logprobs = open_logprobs,
-            extra_body = {"skip_special_tokens":False}
-        )
-
-        outputs = chat_completion.choices[0].message.content
         if self.history_num:
             new_history[-1] = (image,outputs,thought,self.history[-1][-1]+1)
             self.history = new_history
