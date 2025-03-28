@@ -4,20 +4,20 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: diamond_axe
+  type: diamond_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:stripped_oak_wood
+  identity: mine_block:granite
   max_reward_times: 1
   objects:
-  - stripped_oak_wood
+  - granite
   reward: 1.0
 seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:stripped_oak_wood
+  text: mine_block:granite
 teleport:
-  x: 883
-  y: 69
-  z: 609
+  x: 210
+  y: 73
+  z: 965

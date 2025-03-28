@@ -8,7 +8,7 @@ init_inventory:
   type: diamond_sword
 inventory_distraction_level: normal
 mobs:
-  name: elder_guardian
+- name: elder_guardian
   number: 1
   range_x:
   - -1

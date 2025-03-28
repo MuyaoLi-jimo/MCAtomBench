@@ -8,7 +8,7 @@ init_inventory:
   type: diamond_axe
 inventory_distraction_level: normal
 mobs:
-  name: skeleton_horse
+- name: skeleton_horse
   number: 1
   range_x:
   - -1

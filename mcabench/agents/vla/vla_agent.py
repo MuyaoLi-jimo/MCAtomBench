@@ -9,6 +9,7 @@ from pathlib import Path
 from collections import Counter
 import numpy as np
 from transformers import AutoTokenizer
+from minestudio.simulator.entry import MinecraftSim
 
 from mcabench.agents.vla import action_mapping, load_model
 from mcabench.agents import base_agent,vllm_client
@@ -32,7 +33,7 @@ BASE_INSTRUCTION_TEMPLATE = [
     "I need you to craft {} right now.",
 ]
 
-class RT2_AGENT(base_agent.Agent,vllm_client.VllmClient):
+class RT2AGENT(vllm_client.VllmClient,base_agent.Agent):
     def __init__(self, model_path, base_url, api_key="EMPTY",
                  history_num=0,action_chunk_len=1, bpe=0,
                  instruction_type:Literal['simple','recipe','normal'] = 'normal',
@@ -71,9 +72,9 @@ class RT2_AGENT(base_agent.Agent,vllm_client.VllmClient):
                 trust_remote_code=True,
             )
             
-        self.set_processor_wrapper()
+        self.set_processor_wrapper(model_name=self.VLM_backbone)
 
-    def reset(self):
+    def reset(self,env:MinecraftSim):
         self.history = []
           
     def rule_based_instruction(self,env_prompt:str):

@@ -4,7 +4,7 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: stone_axe
+  type: iron_axe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block

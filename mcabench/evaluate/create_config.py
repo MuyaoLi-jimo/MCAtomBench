@@ -208,7 +208,7 @@ def create_smelt_content(recipe_path,dis=False,
     
     if dis:
         config_content["inventory_distraction_level"] = "easy"
-    dump_yaml_file(config_content=config_content,type_name=type_name,yaml_name=result_item)
+    dump_yaml_file(config_content=config_content,type_name=type_name,yaml_name=type_name + result_item)
     return config_content
 
 
@@ -247,7 +247,7 @@ def create_mine_content(task_name:str,mine_entity):
     }
     
     type_name = "mine"
-    dump_yaml_file(config_content=config_content,type_name=type_name,yaml_name=task_name.split(":")[-1])
+    dump_yaml_file(config_content=config_content,type_name=type_name,yaml_name=type_name+"-"+task_name.split(":")[-1])
 
 
 def create_kill_content(task_name:str,kill_entity:dict):
@@ -273,12 +273,12 @@ def create_kill_content(task_name:str,kill_entity:dict):
                 "z": seed["position"][2],
             },
             "command": kill_entity["commands"],
-            "mobs":{
+            "mobs":[{
                 "name": task_name.split(":")[-1],
                 "number": 1,
                 "range_x":  [-1, 1],
                 "range_z":  [2, 8],
-            },
+            }],
             "task_conf":[{
                 "name": "kill",
                 "text": task_name,
@@ -348,7 +348,7 @@ def get_useful(test_types:list,separate_num:int=7):
         reference_paths[i * split_size : (i + 1) * split_size]
         for i in range(separate_num )
     ]
-    with open(BASE_DIR, "w", encoding="utf-8") as txt_file:
+    with open(BASE_DIR/"list.txt", "w", encoding="utf-8") as txt_file:
         for split in splits:
             for idx, reference in enumerate(split):
                 if "base" not in reference:
@@ -357,5 +357,5 @@ def get_useful(test_types:list,separate_num:int=7):
     
 if __name__ == "__main__":
     
-    create_config(test_type="craft")
-    #get_useful(test_types=["craft","smelt"])
+    create_config(test_type="mine")
+    get_useful(test_types=["kill","mine"],separate_num=4)

@@ -4,20 +4,20 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: iron_axe
+  type: iron_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:spruce_door
+  identity: mine_block:brewing_stand
   max_reward_times: 1
   objects:
-  - spruce_door
+  - brewing_stand
   reward: 1.0
-seed: 2024
+seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:spruce_door
+  text: mine_block:brewing_stand
 teleport:
-  x: -1966.5
+  x: 859
   y: 70
-  z: -1238
+  z: 561

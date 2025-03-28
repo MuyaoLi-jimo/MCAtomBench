@@ -1,7 +1,7 @@
 '''
 Date: 2024-11-11 16:40:57
 LastEditors: Muyao 2350076251@qq.com
-LastEditTime: 2025-03-24 04:10:49
+LastEditTime: 2025-03-24 14:30:46
 FilePath: /MineStudio/minestudio/simulator/callbacks/record.py
 '''
 import av
@@ -127,7 +127,7 @@ class RecordCallback(MinecraftCallback):
         line_type = cv2.LINE_AA
     
         if self.record_raw_observation:
-            with av.open(demo_path, mode="w", format='mp4') as container:
+            with av.open(output_path, mode="w", format='mp4') as container:
                 stream = container.add_stream("h264", rate=self.fps)
                 stream.width, stream.height = self.frames[0].shape[1], self.frames[0].shape[0]
 
@@ -149,9 +149,8 @@ class RecordCallback(MinecraftCallback):
                     frame_with_text = frame.copy()
 
                     # 如果有指令文本
-                    print(self.show_instruction, idx < len(self.texts))
                     if self.show_instruction and idx < len(self.texts):
-                        cv2.putText(frame_with_text, self.texts[idx][:50], (20, 100), font, font_scale, font_color, thickness, line_type)
+                        cv2.putText(frame_with_text, self.texts[idx][:50], (500, 20), font, font_scale, font_color, thickness, line_type)
 
                     # 如果有动作文本
                     if self.show_actions:
@@ -160,7 +159,7 @@ class RecordCallback(MinecraftCallback):
                                 continue
                             display_v = "[{:.2f}, {:.2f}]".format(v[0], v[1]) if k == "camera" else v
                             cv2.putText(frame_with_text, f"{k}: {display_v}", (10, 25 + row * 15),
-                                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, font_color, 2)
+                                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, font_color, thickness)
 
                     video_frame = av.VideoFrame.from_ndarray(frame_with_text, format="rgb24")
 
@@ -193,10 +192,14 @@ class RecordCallback(MinecraftCallback):
         print(f'[green]Episode {self.episode_id} saved at {output_path}[/green]')
         
     def forget(self):
-        self.frames = []
-        self.actions = []
-        self.infos = []
-        self.texts = []
+        if self.frames:
+            self.frames = self.frames[-1:]
+        if self.actions:
+            self.actions = [{}]
+        if self.infos:
+            self.infos = self.infos[-1:]
+        if self.texts:
+            self.texts = self.texts[-1:]
     
         
     def _process_info(self,info:dict):

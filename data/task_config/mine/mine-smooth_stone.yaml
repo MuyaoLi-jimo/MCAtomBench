@@ -4,20 +4,20 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: iron_axe
+  type: diamond_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:spruce_stairs
+  identity: mine_block:smooth_stone
   max_reward_times: 1
   objects:
-  - spruce_stairs
+  - smooth_stone
   reward: 1.0
-seed: 2024
+seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:spruce_stairs
+  text: mine_block:smooth_stone
 teleport:
-  x: -1962
-  y: 67
-  z: -1233
+  x: 891
+  y: 68
+  z: 536

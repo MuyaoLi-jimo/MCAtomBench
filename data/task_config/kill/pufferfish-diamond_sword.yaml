@@ -8,7 +8,7 @@ init_inventory:
   type: diamond_sword
 inventory_distraction_level: normal
 mobs:
-  name: pufferfish
+- name: pufferfish
   number: 1
   range_x:
   - -1

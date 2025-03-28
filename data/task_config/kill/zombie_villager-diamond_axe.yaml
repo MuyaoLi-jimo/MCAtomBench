@@ -9,7 +9,7 @@ init_inventory:
   type: diamond_axe
 inventory_distraction_level: normal
 mobs:
-  name: zombie_villager
+- name: zombie_villager
   number: 1
   range_x:
   - -1

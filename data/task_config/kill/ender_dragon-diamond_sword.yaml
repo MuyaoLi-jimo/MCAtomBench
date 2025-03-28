@@ -8,7 +8,7 @@ init_inventory:
   type: diamond_sword
 inventory_distraction_level: normal
 mobs:
-  name: ender_dragon
+- name: ender_dragon
   number: 1
   range_x:
   - -1

@@ -4,20 +4,20 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: iron_pickaxe
+  type: stone_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:composter
+  identity: mine_block:diorite
   max_reward_times: 1
   objects:
-  - composter
+  - diorite
   reward: 1.0
 seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:composter
+  text: mine_block:diorite
 teleport:
-  x: 893
-  y: 72
-  z: 632
+  x: 217
+  y: 71
+  z: 959

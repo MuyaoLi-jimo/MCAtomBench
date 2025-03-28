@@ -4,20 +4,20 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: iron_pickaxe
+  type: diamond_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:wall_torch
+  identity: mine_block:composter
   max_reward_times: 1
   objects:
-  - wall_torch
+  - composter
   reward: 1.0
 seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:wall_torch
+  text: mine_block:composter
 teleport:
-  x: 883
-  y: 69
-  z: 609
+  x: 893
+  y: 72
+  z: 632

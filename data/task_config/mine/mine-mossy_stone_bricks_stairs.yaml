@@ -4,7 +4,7 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: iron_pickaxe
+  type: diamond_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block

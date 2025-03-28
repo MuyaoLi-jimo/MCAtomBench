@@ -2,7 +2,7 @@
 Author: Muyao 2350076251@qq.com
 Date: 2025-03-23 23:15:37
 LastEditors: Muyao 2350076251@qq.com
-LastEditTime: 2025-03-24 03:50:06
+LastEditTime: 2025-03-26 23:21:06
 '''
 """
 任务清单：
@@ -53,7 +53,7 @@ def evaluate(video_path,evaluate_config:dict, agent_config:dict):
     
     # 写入callback
     camera_cfg = CameraConfig(**env_cfg.camera_config)
-    record_callback = RecordCallback(record_path=Path(video_path).parent, fps=30, 
+    record_callback = RecordCallback(record_path=Path(video_path).parent, fps=evaluate_config["fps"], 
                                       show_actions= "action" in evaluate_config["demo"],show_instruction="instruction" in evaluate_config["demo"],
                                       record_actions=evaluate_config["record"],record_infos=evaluate_config["record"],record_raw_observation=(not evaluate_config["demo"] or evaluate_config["record"]))  
     callbacks = [
@@ -124,12 +124,14 @@ def evaluate(video_path,evaluate_config:dict, agent_config:dict):
 
     agent = agent_wrapper.make_agent(**agent_config)
     env.action_type = agent.action_type
+    agent.reset(env=env)
 
     success = (False,evaluate_config["max_frames"])
     for i in range(evaluate_config["max_frames"]):
         instructions = agent.get_instructions(env,env_cfg)
         observations = agent.get_observations(env,info)
         action = agent.forward(observations=observations,instructions=instructions,verbos=evaluate_config["verbos"])
+        agent.show(record_callback)
         if evaluate_config["verbos"]:
             console.Console().log(action)
         obs, reward, terminated, truncated, info = env.step(action)
@@ -142,8 +144,10 @@ def evaluate(video_path,evaluate_config:dict, agent_config:dict):
     if success[0]:
         for i in range(20):
             action = agent.forward([info["pov"]],instructions,verbos=evaluate_config["verbos"])
+            agent.show(record_callback)
             obs, reward, terminated, truncated, info = env.step(action)
-         
+    # 最后一帧
+    agent.show(record_callback)
     env.close()
     return success
 
@@ -198,7 +202,7 @@ def multi_evaluate(args,agent_config,evaluate_config):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--workers', type=int, default=1) 
-    parser.add_argument('--split-number', type=int, default=10) 
+    parser.add_argument('--split-number', type=int, default=20) 
     parser.add_argument('--env-config',"-e", type=str,) 
     parser.add_argument('--agent-mode', type=str, default="rt2")
     parser.add_argument('--video-main-fold',type=str)
@@ -206,6 +210,7 @@ if __name__ == "__main__":
     parser.add_argument('--verbos', type=bool, default=False)
     parser.add_argument('--demo', type=str, default="") 
     parser.add_argument('--record', type=bool, default=False)
+    parser.add_argument('--fps',type=int)
     
     parser.add_argument('--model-path', type=str)
     
@@ -237,6 +242,7 @@ if __name__ == "__main__":
         verbos = args.verbos,
         demo=args.demo,
         record = args.record,
+        fps=args.fps
     )
     
     if args.workers==0:

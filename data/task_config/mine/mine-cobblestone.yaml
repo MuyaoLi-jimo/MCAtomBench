@@ -4,20 +4,20 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: diamond_pickaxe
+  type: stone_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:stone_slab
+  identity: mine_block:cobblestone
   max_reward_times: 1
   objects:
-  - stone_slab
+  - cobblestone
   reward: 1.0
 seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:stone_slab
+  text: mine_block:cobblestone
 teleport:
-  x: 345
-  y: 70
-  z: 989
+  x: 217
+  y: 71
+  z: 959

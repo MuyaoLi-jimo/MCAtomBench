@@ -13,7 +13,6 @@ import math
 
 class VllmClient:
     def __init__(self,api_key,base_url,temperature,max_tokens,**kwargs):
-        super().__init__(**kwargs)
         self.api_key = api_key
         self.base_url = base_url
         self.client = OpenAI(
@@ -28,7 +27,9 @@ class VllmClient:
     
         self.processor_wrapper = None
         
-    def set_processor_wrapper(self,model_name:str):
+    def set_processor_wrapper(self,model_name:str=None):
+        if not model_name:
+            model_name = self.model
         self.processor_wrapper = ProcessorWrapper(None,model_name=model_name)
         
     def generate(self,messages:list,verbos:bool=False):
@@ -188,7 +189,7 @@ def translate_cv2(image: Union[str, pathlib.PosixPath, np.ndarray, Image.Image])
 class ProcessorWrapper:
     def __init__(self,processor=None,model_name= "qwen2_vl"):
         self.processor = processor
-        self.model_name = model_name
+        self.model_name = model_name.replace("-","_")
         self.image_factor = 28
         self.min_pixels = 4 * 28 * 28
         self.max_pixels = 1024 * 28 * 28  #16384 * 28 * 28
@@ -265,6 +266,6 @@ class ProcessorWrapper:
             image = Image.open(image_path)
         if not isinstance(image, Image.Image):
             image = Image.fromarray(image.astype('uint8'))
-        if self.model_name in "qwen2_vl":
+        if "qwen2_vl" in self.model_name:
             image = fetch_image(image,factor=self.image_factor,min_pixels=self.min_pixels,max_pixels=self.max_pixels,max_ratio=self.max_ratio,)
         return image

@@ -4,20 +4,20 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: wooden_pickaxe
+  type: iron_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:granite
+  identity: mine_block:stone_slab
   max_reward_times: 1
   objects:
-  - granite
+  - stone_slab
   reward: 1.0
 seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:granite
+  text: mine_block:stone_slab
 teleport:
-  x: 210
-  y: 73
-  z: 965
+  x: 345
+  y: 70
+  z: 989

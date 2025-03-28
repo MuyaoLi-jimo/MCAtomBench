@@ -8,16 +8,16 @@ init_inventory:
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:brewing_stand
+  identity: mine_block:wall_torch
   max_reward_times: 1
   objects:
-  - brewing_stand
+  - wall_torch
   reward: 1.0
 seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:brewing_stand
+  text: mine_block:wall_torch
 teleport:
-  x: 859
-  y: 70
-  z: 561
+  x: 883
+  y: 69
+  z: 609

@@ -8,7 +8,7 @@ init_inventory:
   type: diamond_sword
 inventory_distraction_level: normal
 mobs:
-  name: wither_skeleton
+- name: wither_skeleton
   number: 1
   range_x:
   - -1

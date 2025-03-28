@@ -4,20 +4,20 @@ defaults:
 init_inventory:
 - quantity: '1'
   slot: '0'
-  type: stone_axe
+  type: diamond_pickaxe
 inventory_distraction_level: normal
 reward_conf:
 - event: mine_block
-  identity: mine_block:spruce_trapdoor
+  identity: mine_block:netherrack
   max_reward_times: 1
   objects:
-  - spruce_trapdoor
+  - netherrack
   reward: 1.0
-seed: 2024
+seed: 2025
 task_conf:
 - name: mine
-  text: mine_block:spruce_trapdoor
+  text: mine_block:netherrack
 teleport:
-  x: -1957
-  y: 64
-  z: -1214
+  x: 340
+  y: 67
+  z: 1000
