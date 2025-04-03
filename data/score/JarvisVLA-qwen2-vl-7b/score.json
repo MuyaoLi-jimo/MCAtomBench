@@ -1,1 +1,410 @@
-{}
+{
+    "creeper-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "evoker-diamond_axe": {
+        "win": 2,
+        "total": 10
+    },
+    "ocelot-diamond_sword": {
+        "win": 2,
+        "total": 10
+    },
+    "silverfish-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "salmon-diamond_sword": {
+        "win": 6,
+        "total": 10
+    },
+    "silverfish-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "strider-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "elder_guardian-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "zombie-diamond_axe": {
+        "win": 8,
+        "total": 10
+    },
+    "ender_dragon-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "rabbit-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "cod-diamond_axe": {
+        "win": 2,
+        "total": 10
+    },
+    "pig-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "piglin-diamond_sword": {
+        "win": 8,
+        "total": 10
+    },
+    "zombie_villager-diamond_sword": {
+        "win": 7,
+        "total": 10
+    },
+    "endermite-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "hoglin-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "drowned-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "cat-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "enderman-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "slime-diamond_axe": {
+        "win": 3,
+        "total": 10
+    },
+    "evoker-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "ender_dragon-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "squid-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "witch-diamond_axe": {
+        "win": 3,
+        "total": 10
+    },
+    "villager-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "mooshroom-diamond_axe": {
+        "win": 2,
+        "total": 10
+    },
+    "piglin-diamond_axe": {
+        "win": 4,
+        "total": 10
+    },
+    "pillager-diamond_axe": {
+        "win": 7,
+        "total": 10
+    },
+    "stray-diamond_sword": {
+        "win": 2,
+        "total": 10
+    },
+    "ghast-diamond_sword": {
+        "win": 3,
+        "total": 10
+    },
+    "bee-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "rabbit-diamond_sword": {
+        "win": 2,
+        "total": 10
+    },
+    "hoglin-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "strider-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "blaze-diamond_sword": {
+        "win": 3,
+        "total": 10
+    },
+    "cow-diamond_sword": {
+        "win": 3,
+        "total": 10
+    },
+    "tropical_fish-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "iron_golem-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "pufferfish-diamond_sword": {
+        "win": 2,
+        "total": 10
+    },
+    "ocelot-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "chicken-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "wolf-diamond_sword": {
+        "win": 2,
+        "total": 10
+    },
+    "endermite-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "llama-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "witch-diamond_sword": {
+        "win": 3,
+        "total": 10
+    },
+    "wither_skeleton-diamond_axe": {
+        "win": 7,
+        "total": 10
+    },
+    "wither-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "stray-diamond_axe": {
+        "win": 3,
+        "total": 10
+    },
+    "vex-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "enderman-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "guardian-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "polar_bear-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "cave_spider-diamond_sword": {
+        "win": 2,
+        "total": 10
+    },
+    "shulker-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "chicken-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "sheep-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "donkey-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "magma_cube-diamond_sword": {
+        "win": 2,
+        "total": 10
+    },
+    "donkey-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "pillager-diamond_sword": {
+        "win": 7,
+        "total": 10
+    },
+    "ghast-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "guardian-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "cod-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "zombie-diamond_sword": {
+        "win": 6,
+        "total": 10
+    },
+    "zombified_piglin-diamond_axe": {
+        "win": 3,
+        "total": 10
+    },
+    "cow-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "wither_skeleton-diamond_sword": {
+        "win": 3,
+        "total": 10
+    },
+    "dolphin-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "skeleton_horse-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "skeleton-diamond_axe": {
+        "win": 4,
+        "total": 10
+    },
+    "bee-diamond_axe": {
+        "win": 2,
+        "total": 10
+    },
+    "turtle-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "skeleton-diamond_sword": {
+        "win": 6,
+        "total": 10
+    },
+    "sheep-diamond_axe": {
+        "win": 7,
+        "total": 10
+    },
+    "cave_spider-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "vex-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "fox-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "zombified_piglin-diamond_sword": {
+        "win": 8,
+        "total": 10
+    },
+    "husk-diamond_sword": {
+        "win": 4,
+        "total": 10
+    },
+    "horse-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "mooshroom-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "parrot-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "tropical_fish-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "wolf-diamond_axe": {
+        "win": 3,
+        "total": 10
+    },
+    "pufferfish-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "shulker-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "skeleton_horse-diamond_axe": {
+        "win": 2,
+        "total": 10
+    },
+    "slime-diamond_sword": {
+        "win": 5,
+        "total": 10
+    },
+    "iron_golem-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "spider-diamond_axe": {
+        "win": 3,
+        "total": 10
+    },
+    "piglin_brute-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "blaze-diamond_axe": {
+        "win": 2,
+        "total": 10
+    },
+    "turtle-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "ravager-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "pig-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "polar_bear-diamond_axe": {
+        "win": 1,
+        "total": 10
+    },
+    "vindicator-diamond_sword": {
+        "win": 3,
+        "total": 10
+    },
+    "piglin_brute-diamond_axe": {
+        "win": 0,
+        "total": 10
+    },
+    "wither-diamond_sword": {
+        "win": 0,
+        "total": 10
+    },
+    "parrot-diamond_sword": {
+        "win": 1,
+        "total": 10
+    },
+    "husk-diamond_axe": {
+        "win": 5,
+        "total": 10
+    }
+}

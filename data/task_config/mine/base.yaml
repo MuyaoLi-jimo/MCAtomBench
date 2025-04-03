@@ -6,8 +6,11 @@ start_time: 0
 time_limit: 1000
 candidate_preferred_spawn_biome: 
   - plains
+preferred_spawn_biome: "plains"
 candidate_weather: 
   - clear
+
+command: []
 
 camera_config:
   camera_binsize: 1
@@ -23,11 +26,11 @@ need_gui: False
 inventory_distraction_level: "zero"
 
 task_conf:
-  - name: "craft"
-    text: "craft item" 
+  - name: "mine"
+    text: "mine item" 
+
+mobs: []
+init_inventory: []
 
 worker:
-  "smelt"
-
-init_inventory: []
-mobs: []
+  "mine"

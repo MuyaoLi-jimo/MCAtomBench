@@ -12,7 +12,7 @@ from transformers import AutoTokenizer
 from minestudio.simulator.entry import MinecraftSim
 
 from mcabench.agents.vla import action_mapping, load_model
-from mcabench.agents import base_agent,vllm_client
+from mcabench.agents import base_agent,vlm_client
 from mcabench.utils.file_utils import load_json_file
 
 #################
@@ -33,8 +33,9 @@ BASE_INSTRUCTION_TEMPLATE = [
     "I need you to craft {} right now.",
 ]
 
-class RT2AGENT(vllm_client.VllmClient,base_agent.Agent):
+class RT2AGENT(vlm_client.VlMClient,base_agent.Agent):
     def __init__(self, model_path, base_url, api_key="EMPTY",
+                 LLM_backbone = "", VLM_backbone="",tokenizer_path="",
                  history_num=0,action_chunk_len=1, bpe=0,
                  instruction_type:Literal['simple','recipe','normal'] = 'normal',
                  temperature=0.5,max_tokens=1024,
@@ -45,12 +46,27 @@ class RT2AGENT(vllm_client.VllmClient,base_agent.Agent):
             base_url=base_url,
             temperature=temperature,
             max_tokens=max_tokens,
+            model_path=model_path,
             **kwargs
         )
         self._action_type = "agent"
         
+        if not LLM_backbone:
+            self.LLM_backbone,self.VLM_backbone = load_model.load_visual_model(checkpoint_path=model_path)
+            tokenizer_path = model_path
+        else:
+            self.LLM_backbone = LLM_backbone
+            self.VLM_backbone = VLM_backbone
+        
         self.model_path = model_path
-        self.LLM_backbone,self.VLM_backbone = load_model.load_visual_model(checkpoint_path=model_path)
+        
+            
+        if self.LLM_backbone in {"llama-3","llama-2","qwen2_vl"}:
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                tokenizer_path,  
+                trust_remote_code=True,
+            )
+            
         self.action_tokenizer = action_mapping.OneActionTokenizer(tokenizer_type=self.LLM_backbone)
         
         self.prompt_library = load_json_file(Path(__file__).parents[3]/"data"/"assets"/"instructions.json") #存储我写好的instructions
@@ -64,13 +80,6 @@ class RT2AGENT(vllm_client.VllmClient,base_agent.Agent):
         self.history = []
         
         self.instruction_type = instruction_type
-        
-        self.tokenizer = None
-        if self.LLM_backbone in {"llama-3","llama-2","qwen2_vl"}:
-            self.tokenizer = AutoTokenizer.from_pretrained(
-                model_path,  
-                trust_remote_code=True,
-            )
             
         self.set_processor_wrapper(model_name=self.VLM_backbone)
 
@@ -242,17 +251,24 @@ class RT2AGENT(vllm_client.VllmClient,base_agent.Agent):
 
         messages.append(self.processor_wrapper.create_message_vllm(role="user",input_type="image",prompt=[prompt_input],image=[image]))
 
-        outputs = self.generate(messages=messages,verbos=verbos)
+        if self.use_vllm and self.LLM_backbone in {"qwen2_vl","llama-2","llama-3"}:
+            if_token_ids = True
+
+        outputs,content = self.generate(messages=messages,verbos=verbos,if_token_ids=if_token_ids)
+        
+        if verbos:
+            print(content)
         
         if self.history_num:
-            new_history[-1] = (image,outputs,thought,self.history[-1][-1]+1)
+            new_history[-1] = (image,content,thought,self.history[-1][-1]+1)
             self.history = new_history
-        if self.LLM_backbone in {"qwen2_vl"}:
-            outputs = self.tokenizer(outputs)["input_ids"]
-
+    
         actions =  self.action_tokenizer.decode(outputs)
 
         len_action = min(self.action_chunk_len,len(actions))
         self.actions = actions[:len_action]
+        
+        if verbos:
+            print(actions)
         
         return self.actions.pop(0)

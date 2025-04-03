@@ -66,5 +66,5 @@ if __name__ == "__main__":
     parser.add_argument('--agent-name',type=str, default="JarvisVLA-qwen2-vl-7b")
     args = parser.parse_args()
     
-    scoring(test_types=["mine",],record_dir = Path(args.record_dir),agent_name=args.agent_name)
+    scoring(test_types=["kill",],record_dir = Path(args.record_dir),agent_name=args.agent_name)
     

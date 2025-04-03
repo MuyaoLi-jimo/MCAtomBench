@@ -2,7 +2,7 @@
 Author: Muyao 2350076251@qq.com
 Date: 2025-03-23 23:15:37
 LastEditors: Muyao 2350076251@qq.com
-LastEditTime: 2025-03-26 23:21:06
+LastEditTime: 2025-03-31 06:34:58
 '''
 """
 任务清单：
@@ -17,6 +17,7 @@ import os
 import hydra
 from omegaconf import OmegaConf
 import ray
+import time
 
 from minestudio.simulator import MinecraftSim
 from minestudio.simulator.entry import CameraConfig
@@ -127,6 +128,7 @@ def evaluate(video_path,evaluate_config:dict, agent_config:dict):
     agent.reset(env=env)
 
     success = (False,evaluate_config["max_frames"])
+    start_time = time.time()
     for i in range(evaluate_config["max_frames"]):
         instructions = agent.get_instructions(env,env_cfg)
         observations = agent.get_observations(env,info)
@@ -140,6 +142,7 @@ def evaluate(video_path,evaluate_config:dict, agent_config:dict):
             success = (True,i)
             break   
         
+    print(f"FPS: {success[1]/(time.time()-start_time)}")
     # sample another 30 steps if success
     if success[0]:
         for i in range(20):
@@ -202,7 +205,7 @@ def multi_evaluate(args,agent_config,evaluate_config):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--workers', type=int, default=1) 
-    parser.add_argument('--split-number', type=int, default=20) 
+    parser.add_argument('--split-number', type=int, default=5) 
     parser.add_argument('--env-config',"-e", type=str,) 
     parser.add_argument('--agent-mode', type=str, default="rt2")
     parser.add_argument('--video-main-fold',type=str)
@@ -213,7 +216,10 @@ if __name__ == "__main__":
     parser.add_argument('--fps',type=int)
     
     parser.add_argument('--model-path', type=str)
-    
+    parser.add_argument('--LLM_backbone', type=str,default="")
+    parser.add_argument('--VLM_backbone', type=str,default="")
+    parser.add_argument('--tokenizer_path', type=str,default="")
+
     parser.add_argument('--base-url',type=str,default="")
     parser.add_argument('--instruction-type',type=str, default='normal')
     parser.add_argument('--temperature','-t',type=float, default=0.7)
@@ -234,6 +240,9 @@ if __name__ == "__main__":
         action_chunk_len = args.action_chunk_len,
         base_url=args.base_url,
         model_path=args.model_path,
+        LLM_backbone = args.LLM_backbone,
+        VLM_backbone = args.VLM_backbone,
+        tokenizer_path = args.tokenizer_path,
         
     )
     evaluate_config = dict(

@@ -10,44 +10,105 @@ import cv2
 import requests
 import io
 import math
+import torch
+from transformers import AutoProcessor,AutoModelForCausalLM,AutoModelForImageTextToText
+from transformers import AutoTokenizer
 
-class VllmClient:
-    def __init__(self,api_key,base_url,temperature,max_tokens,**kwargs):
-        self.api_key = api_key
-        self.base_url = base_url
-        self.client = OpenAI(
-            api_key=api_key,
-            base_url=base_url,
-        )
-        models = self.client.models.list()
-        self.model = models.data[0].id
+class VlMClient:
+    def __init__(self, api_key,base_url,temperature,max_tokens,
+                 model_path,tokenizer_path="",
+                 **kwargs):
         
-        self.temperature = temperature
         self.max_tokens = max_tokens
-    
+        self.temperature = temperature
+        self.model_path = model_path
+        self.tokenizer_path = tokenizer_path
+        self.processor = None
+        self.tokenizer = None
+        self.model = None
+        self.use_vllm = True
+        
+        if tokenizer_path:
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                tokenizer_path,  
+                trust_remote_code=True,
+            )
+        
+        if base_url:
+            self.client = OpenAI(
+                api_key=api_key,
+                base_url=base_url,
+            )
+            models = self.client.models.list()
+            self.model_name = models.data[0].id
+        else:
+            self.use_vllm = False
+            model_path = model_path.lower().replace('-','_')
+            processor_config = dict(
+                do_rescale=False,
+                patch_size=14,
+                vision_feature_select_strategy="default"
+            )
+            model_kwargs = dict(
+                torch_dtype="auto"
+            )
+            if 'qwen2_vl' in model_path:
+                model_kwargs["attn_implementation"] = "flash_attention_2"
+                model_kwargs["torch_dtype"] = torch.bfloat16
+            self.processor = AutoProcessor.from_pretrained(self.model_path, trust_remote_code=True, **processor_config)
+            self.model = AutoModelForImageTextToText.from_pretrained(self.model_path, trust_remote_code=True,
+                                                                     device_map="auto", **model_kwargs) 
+            
         self.processor_wrapper = None
         
     def set_processor_wrapper(self,model_name:str=None):
         if not model_name:
-            model_name = self.model
-        self.processor_wrapper = ProcessorWrapper(None,model_name=model_name)
+            model_name = self.model_name
+        self.processor_wrapper = ProcessorWrapper(model_name=model_name, use_vllm=self.use_vllm)
         
-    def generate(self,messages:list,verbos:bool=False):
+    def generate(self,messages:list,verbos:bool=False,if_token_ids=False):
         
         open_logprobs = False
         if verbos:
             open_logprobs = True
-
-        chat_completion = self.client.chat.completions.create(
-            messages=messages,
-            model=self.model,
-            temperature=self.temperature,
-            max_tokens=self.max_tokens,
-            logprobs = open_logprobs,
-            extra_body = {"skip_special_tokens":False}
-        )
-        outputs = chat_completion.choices[0].message.content
-        return outputs
+        content = ""
+        if self.use_vllm:
+            
+            chat_completion = self.client.chat.completions.create(
+                messages=messages,
+                model=self.model_name,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens,
+                logprobs = open_logprobs,
+                extra_body = {"skip_special_tokens":False}
+            )
+            content = chat_completion.choices[0].message.content
+            if if_token_ids:
+                outputs = self.tokenizer(content)["input_ids"]
+            else:
+                outputs = content
+        else:
+            images = []
+            for message in messages:
+                for content in message["content"]:
+                    if content["type"]=="image":
+                        image = encode_image_to_pil(content["image"])
+                        images.append(image)
+                        
+            text_prompt = self.processor.apply_chat_template(messages, add_generation_prompt=True)
+            inputs = self.processor(
+                text=[text_prompt], images=images, padding=True, return_tensors="pt"
+            )
+            inputs = inputs.to("cuda")
+            output_ids = self.model.generate(**inputs, max_new_tokens=self.max_tokens-inputs.input_ids.shape[-1],temperature=self.temperature)
+            if if_token_ids:
+                outputs = [
+                    output_ids[len(input_ids) :].tolist()
+                    for input_ids, output_ids in zip(inputs.input_ids, output_ids)
+                ][0]
+            else:
+                raise AssertionError("DO NOT FINISH")
+        return outputs,content
 
 
 def round_by_factor(number: int, factor: int) -> int:
@@ -110,6 +171,31 @@ def pil2base64(image):
     img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
     return img_str
 
+
+def encode_image_to_pil(image_input):
+    if isinstance(image_input, (str, Path)): 
+        try:
+            img = Image.open(image_input)
+            if img.mode != 'RGB':
+                img = img.convert('RGB')
+            return img
+        except IOError:
+            raise ValueError("Could not open the image file. Check the path and file format.")
+    elif isinstance(image_input, np.ndarray):
+        try:
+            img = Image.fromarray(image_input)
+            if img.mode != 'RGB':
+                img = img.convert('RGB')
+            return img
+        except TypeError:
+            raise ValueError("Numpy array is not in an appropriate format to convert to an image.")
+    elif isinstance(image_input, Image.Image):
+        if image_input.mode != 'RGB':
+            image_input = image_input.convert('RGB')
+        return image_input
+    else:
+        raise TypeError("Unsupported image input type. Supported types are str, pathlib.Path, numpy.ndarray, and PIL.Image.")
+    
 
 def encode_image_to_base64(image:Union[str,pathlib.PosixPath,Image.Image,np.ndarray], format='JPEG') -> str:
     """Encode an image to base64 format, supports URL, numpy array, and PIL.Image."""
@@ -187,8 +273,8 @@ def translate_cv2(image: Union[str, pathlib.PosixPath, np.ndarray, Image.Image])
     
 
 class ProcessorWrapper:
-    def __init__(self,processor=None,model_name= "qwen2_vl"):
-        self.processor = processor
+    def __init__(self, model_name= "qwen2_vl",use_vllm=True):
+        self.use_vllm = use_vllm
         self.model_name = model_name.replace("-","_")
         self.image_factor = 28
         self.min_pixels = 4 * 28 * 28
@@ -196,10 +282,16 @@ class ProcessorWrapper:
         self.max_ratio = 200
 
     def get_image_message(self,source_data):
-        image_suffix = get_suffix(source_data)
-        image_message = {
-                "type": "image_url",
-                "image_url": { "url": f"data:image/{image_suffix};base64,{encode_image_to_base64(source_data)}"},
+        if self.use_vllm:
+            image_suffix = get_suffix(source_data)
+            image_message = {
+                    "type": "image_url",
+                    "image_url": { "url": f"data:image/{image_suffix};base64,{encode_image_to_base64(source_data)}"},
+                }
+        else:
+            image_message = {
+                "type": "image",
+                "image": source_data,
             }
         return image_message
 
@@ -236,25 +328,6 @@ class ProcessorWrapper:
                 })
         return message
 
-    def create_message(self,role="user",input_type="image",prompt:str="",image=None):
-
-        if self.model_name in {"llava-next","molmo"} :
-            if input_type=="image":
-                message = {
-                    "role":role,
-                    "content":[
-                        {"type": "image"},
-                        {"type": "text", "text": prompt},
-                    ]
-                }
-            if input_type == "text":
-                message = {
-                    "role":role,
-                    "content":[
-                        {"type": "text", "text": prompt},
-                    ]
-                }
-        return message
     
     def create_text_input(self,conversations:list):
         text_prompt = self.processor.apply_chat_template(conversations, add_generation_prompt=True)

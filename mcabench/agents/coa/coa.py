@@ -7,16 +7,17 @@ import textwrap
 import cv2
 from PIL import Image
 from rich import print
-from mcabench.utils import file_utils
-from mcabench.agents import base_agent,vllm_client
-from mcabench.agents.coa import extract
 import math
+from mcabench.utils import file_utils
+from mcabench.agents import base_agent,vlm_client
+from mcabench.agents.coa import extract
+from mcabench.agents.vla import action_mapping, load_model
 from minestudio.simulator.entry import MinecraftSim
 from minestudio.simulator.callbacks.callback import MinecraftCallback
 
 MC_RESOLUTION = (640,360)
 
-class CoaAgent(vllm_client.VllmClient,base_agent.Agent):
+class CoaAgent(vlm_client.VlMClient,base_agent.Agent):
     def __init__(self, 
                  model_path, base_url, api_key="EMPTY",
                  temperature=0.5,max_tokens=1024,
@@ -34,11 +35,10 @@ class CoaAgent(vllm_client.VllmClient,base_agent.Agent):
     
         self.prompt_library = file_utils.load_json_file(Path(__file__).parents[3]/"data"/"assets"/"instructions.json") #存储我写好的instructions
         self.history = []
-        self.no_op = None
-
+        
     def reset(self,env:MinecraftSim):
-        self.no_op = env.noop_action()
-    
+        self.history = []
+        
     def get_instructions(self,env,env_cfg):
         return [item["text"] for item in env_cfg.task_conf]
     
@@ -57,25 +57,7 @@ class CoaAgent(vllm_client.VllmClient,base_agent.Agent):
             instruction += ". \n"
         instruction += "\n"
         return instruction
-        
-    def action_parse(self,raw_input:str)->List:
-        matches = re.findall(r"<raw>(.*?)</raw>", raw_input)
-        actions = []
-        if not matches:
-            return [self.no_op.copy()]
-        for match in matches:
-            action = deepcopy(self.no_op)
-            camera_matches = re.findall(r"\(([-+]?\d*\.?\d+),([-+]?\d*\.?\d+)\)", match)
-            if camera_matches:
-                action["camera"] = np.array([float(camera_matches[0][0]), float(camera_matches[0][1])])
-            
-            action_keys = ['attack','forward','back','left','right','jump','inventory','use','sprint','sneak', 'hotbar.1', 'hotbar.2', 'hotbar.3', 'hotbar.4', 'hotbar.5', 'hotbar.6', 'hotbar.7', 'hotbar.8', 'hotbar.9']
-            for action_key in action_keys:
-                if action_key in match:
-                    action[action_key] = 1
-            actions.append(action)
-        return actions
-        
+
     def to_bgr_uint8(self,frame):
         """
         Convert frame to a 3-channel BGR, uint8, C-contiguous array for OpenCV.
@@ -104,7 +86,6 @@ class CoaAgent(vllm_client.VllmClient,base_agent.Agent):
 
         return frame
 
-        
     def show(self, record_callback:MinecraftCallback):
         frames = record_callback.frames
         
@@ -173,6 +154,36 @@ class CoaAgent(vllm_client.VllmClient,base_agent.Agent):
         
         frames[-1] = np.vstack((recent_frame, text_block))
         record_callback.frames = frames
+        
+    def forward(self, observations, instructions, verbos=False):
+        return super().forward(observations, instructions, verbos)
+
+
+class LatentCoaAgent(CoaAgent):
+    def __init__(self, 
+                 model_path, base_url, api_key="EMPTY",
+                 temperature=0.5,max_tokens=1024,
+                 LLM_backbone = "", VLM_backbone="",tokenizer_path="",
+                 **kwargs):
+        super().__init__(
+            model_path=model_path,
+            api_key=api_key,
+            base_url=base_url,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            LLM_backbone=LLM_backbone,VLM_backbone=VLM_backbone,tokenizer_path=tokenizer_path,
+            **kwargs
+        )
+        self._action_type = "agent"
+        
+        if not LLM_backbone:
+            self.LLM_backbone,self.VLM_backbone = load_model.load_visual_model(checkpoint_path=model_path)
+            tokenizer_path = model_path
+        else:
+            self.LLM_backbone = LLM_backbone
+            self.VLM_backbone = VLM_backbone
+                
+        self.action_tokenizer = action_mapping.OneActionTokenizer(tokenizer_type=self.LLM_backbone)
     
     def forward(self,observations:list,instructions:list,verbos=False):
         messages = []
@@ -180,9 +191,61 @@ class CoaAgent(vllm_client.VllmClient,base_agent.Agent):
         instruction = self.create_restruct_instruction(instructions[0])
         
         messages.append(self.processor_wrapper.create_message_vllm(role="user",input_type="image",prompt=[instruction],image=[image]))
-        outputs = self.generate(messages=messages,verbos=verbos)
+        outputs,content = self.generate(messages=messages,verbos=verbos)
         if verbos:
-            print(outputs)
+            print(content)
+        
+        actions =  self.action_tokenizer.decode(outputs)
+        
+        self.history = [{"action":actions[0],"thought":content}]
+        return actions[0]
+
+class RawActionCoaAgent(CoaAgent):
+    def __init__(self, 
+                 model_path, base_url, api_key="EMPTY",
+                 temperature=0.5,max_tokens=1024,
+                 **kwargs):
+        super().__init__(
+            api_key=api_key,
+            base_url=base_url,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            **kwargs
+        )
+        self._action_type = "env"
+        self.no_op = None
+
+    def reset(self,env:MinecraftSim):
+        self.no_op = env.noop_action()
+        self.history = []
+        
+    def action_parse(self,raw_input:str)->List:
+        matches = re.findall(r"<raw>(.*?)</raw>", raw_input)
+        actions = []
+        if not matches:
+            return [self.no_op.copy()]
+        for match in matches:
+            action = deepcopy(self.no_op)
+            camera_matches = re.findall(r"\(([-+]?\d*\.?\d+),([-+]?\d*\.?\d+)\)", match)
+            if camera_matches:
+                action["camera"] = np.array([float(camera_matches[0][0]), float(camera_matches[0][1])])
+            
+            action_keys = ['attack','forward','back','left','right','jump','inventory','use','sprint','sneak', 'hotbar.1', 'hotbar.2', 'hotbar.3', 'hotbar.4', 'hotbar.5', 'hotbar.6', 'hotbar.7', 'hotbar.8', 'hotbar.9']
+            for action_key in action_keys:
+                if action_key in match:
+                    action[action_key] = 1
+            actions.append(action)
+        return actions
+        
+    def forward(self,observations:list,instructions:list,verbos=False):
+        messages = []
+        image = self.processor_wrapper.create_image_input(observations[0]) 
+        instruction = self.create_restruct_instruction(instructions[0])
+        
+        messages.append(self.processor_wrapper.create_message_vllm(role="user",input_type="image",prompt=[instruction],image=[image]))
+        outputs,content = self.generate(messages=messages,verbos=verbos)
+        if verbos:
+            print(content)
             
         actions = self.action_parse(outputs)
         if verbos:
