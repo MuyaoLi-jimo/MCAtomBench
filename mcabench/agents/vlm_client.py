@@ -11,12 +11,15 @@ import requests
 import io
 import math
 import torch
-from transformers import AutoProcessor,AutoModelForCausalLM,AutoModelForImageTextToText
-from transformers import AutoTokenizer
+from transformers import AutoProcessor,AutoTokenizer,AutoModelForCausalLM,AutoModelForImageTextToText
+from mcabench.utils import file_utils
+
+SYSTEM_PROMPTS = file_utils.load_json_file("mcabench/agents/system_prompt.json")
 
 class VlMClient:
     def __init__(self, api_key,base_url,temperature,max_tokens,
                  model_path,tokenizer_path="",
+                 system_prompt_mode="",
                  **kwargs):
         
         self.max_tokens = max_tokens
@@ -27,6 +30,13 @@ class VlMClient:
         self.tokenizer = None
         self.model = None
         self.use_vllm = True
+        
+        self.system_prompt_mode = system_prompt_mode
+        self.system_prompt = ""
+        if not self.system_prompt_mode:
+            self.system_prompt = SYSTEM_PROMPTS.get(self.agent_mode,"")
+        else:
+            self.system_prompt = SYSTEM_PROMPTS.get(self.system_prompt_mode,"")
         
         if tokenizer_path:
             self.tokenizer = AutoTokenizer.from_pretrained(
@@ -73,7 +83,7 @@ class VlMClient:
             open_logprobs = True
         content = ""
         if self.use_vllm:
-            
+            #print(messages)
             chat_completion = self.client.chat.completions.create(
                 messages=messages,
                 model=self.model_name,
@@ -82,6 +92,7 @@ class VlMClient:
                 logprobs = open_logprobs,
                 extra_body = {"skip_special_tokens":False}
             )
+            #print(chat_completion)
             content = chat_completion.choices[0].message.content
             if if_token_ids:
                 outputs = self.tokenizer(content)["input_ids"]
@@ -294,6 +305,13 @@ class ProcessorWrapper:
                 "image": source_data,
             }
         return image_message
+
+    def create_system_prompt(self,system_prompt:str=""):
+        message = {
+            "role":"system",
+            "content": f"{system_prompt}\n",
+        }
+        return message
 
     def create_message_vllm(self,
                             role:Literal["user","assistant"]="user",

@@ -11,8 +11,8 @@ import numpy as np
 from transformers import AutoTokenizer
 from minestudio.simulator.entry import MinecraftSim
 
-from mcabench.agents.vla import action_mapping, load_model
-from mcabench.agents import base_agent,vlm_client
+from mcabench.agents.vla import load_model
+from mcabench.agents import action_mapping, base_agent,vlm_client
 from mcabench.utils.file_utils import load_json_file
 
 #################
@@ -34,21 +34,25 @@ BASE_INSTRUCTION_TEMPLATE = [
 ]
 
 class RT2AGENT(vlm_client.VlMClient,base_agent.Agent):
-    def __init__(self, model_path, base_url, api_key="EMPTY",
+    def __init__(self, model_path, base_url, system_prompt_mode, api_key="EMPTY",
                  LLM_backbone = "", VLM_backbone="",tokenizer_path="",
                  history_num=0,action_chunk_len=1, bpe=0,
                  instruction_type:Literal['simple','recipe','normal'] = 'normal',
                  temperature=0.5,max_tokens=1024,
                  **kwargs):
         
+        base_agent.Agent.__init__(self, agent_mode="rt2",**kwargs)
         super().__init__(
             api_key=api_key,
             base_url=base_url,
             temperature=temperature,
             max_tokens=max_tokens,
             model_path=model_path,
-            **kwargs
+            system_prompt_mode=system_prompt_mode,
+            agent_mode="rt2",
+            **kwargs,
         )
+        
         self._action_type = "agent"
         
         if not LLM_backbone:
@@ -219,6 +223,9 @@ class RT2AGENT(vlm_client.VlMClient,base_agent.Agent):
                 self.actions = []
                 return action
         messages = []
+        if self.system_prompt:
+            messages.append(self.processor_wrapper.create_system_prompt(system_prompt=self.system_prompt))
+   
         image = self.processor_wrapper.create_image_input(observations[0]) 
 
         detailed_instruction = self.create_detailed_instruction(instructions[0])
@@ -251,8 +258,7 @@ class RT2AGENT(vlm_client.VlMClient,base_agent.Agent):
 
         messages.append(self.processor_wrapper.create_message_vllm(role="user",input_type="image",prompt=[prompt_input],image=[image]))
 
-        if self.use_vllm and self.LLM_backbone in {"qwen2_vl","llama-2","llama-3"}:
-            if_token_ids = True
+        if_token_ids = True if self.use_vllm and self.LLM_backbone in {"qwen2_vl","llama-2","llama-3"} else False
 
         outputs,content = self.generate(messages=messages,verbos=verbos,if_token_ids=if_token_ids)
         

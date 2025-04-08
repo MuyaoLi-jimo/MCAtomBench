@@ -2,7 +2,7 @@
 Author: Muyao 2350076251@qq.com
 Date: 2025-03-23 23:15:37
 LastEditors: Muyao 2350076251@qq.com
-LastEditTime: 2025-03-31 06:34:58
+LastEditTime: 2025-04-03 20:16:48
 '''
 """
 任务清单：
@@ -208,6 +208,7 @@ if __name__ == "__main__":
     parser.add_argument('--split-number', type=int, default=5) 
     parser.add_argument('--env-config',"-e", type=str,) 
     parser.add_argument('--agent-mode', type=str, default="rt2")
+    parser.add_argument('--system-prompt-mode', type=str,default="")
     parser.add_argument('--video-main-fold',type=str)
     parser.add_argument('--max-frames', type=int, default=200) 
     parser.add_argument('--verbos', type=bool, default=False)
@@ -234,6 +235,7 @@ if __name__ == "__main__":
         
     agent_config = dict(
         agent_mode = args.agent_mode,
+        system_prompt_mode = args.system_prompt_mode,
         temperature=args.temperature,
         history_num = args.history_num,
         instruction_type = args.instruction_type,

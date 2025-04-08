@@ -8,27 +8,33 @@ import cv2
 from PIL import Image
 from rich import print
 import math
+from transformers import AutoTokenizer
 from mcabench.utils import file_utils
-from mcabench.agents import base_agent,vlm_client
+from mcabench.agents import action_mapping, base_agent,vlm_client
 from mcabench.agents.coa import extract
-from mcabench.agents.vla import action_mapping, load_model
+from mcabench.agents.vla import load_model
 from minestudio.simulator.entry import MinecraftSim
 from minestudio.simulator.callbacks.callback import MinecraftCallback
 
 MC_RESOLUTION = (640,360)
 
+
 class CoaAgent(vlm_client.VlMClient,base_agent.Agent):
     def __init__(self, 
+                 agent_mode,system_prompt_mode,
                  model_path, base_url, api_key="EMPTY",
                  temperature=0.5,max_tokens=1024,
                  **kwargs):
         super().__init__(
+            model_path=model_path,
+            system_prompt_mode=system_prompt_mode,
             api_key=api_key,
             base_url=base_url,
             temperature=temperature,
             max_tokens=max_tokens,
-            **kwargs
+            **kwargs,
         )
+        base_agent.Agent.__init__(self, agent_mode=agent_mode,**kwargs)
         self._action_type = "env"
         self.model_path = model_path
         self.set_processor_wrapper()
@@ -117,7 +123,7 @@ class CoaAgent(vlm_client.VlMClient,base_agent.Agent):
                         font, font_scale, action_color, thickness)
 
         # 再画 point
-        for p_item in hierarchical_action["point"]:
+        for pdx,p_item in enumerate(hierarchical_action["point"]):
             x_p, y_p = p_item["point"][0]
             caption_p = p_item["label"]
 
@@ -132,6 +138,12 @@ class CoaAgent(vlm_client.VlMClient,base_agent.Agent):
                     break
 
             # 画圆
+            if pdx==0:
+                circle_color =  (255, 0, 0)
+            elif pdx==1:
+                circle_color = (0, 200, 0)
+            else:
+                circle_color = (255,255,255)
             cv2.circle(recent_frame, (x_p, y_p), radius, circle_color, -1)
 
             # 如果不需要隐藏文字，则显示文字
@@ -158,14 +170,16 @@ class CoaAgent(vlm_client.VlMClient,base_agent.Agent):
     def forward(self, observations, instructions, verbos=False):
         return super().forward(observations, instructions, verbos)
 
-
 class LatentCoaAgent(CoaAgent):
     def __init__(self, 
                  model_path, base_url, api_key="EMPTY",
                  temperature=0.5,max_tokens=1024,
+                 system_prompt_mode="",
                  LLM_backbone = "", VLM_backbone="",tokenizer_path="",
                  **kwargs):
         super().__init__(
+            agent_mode = "latent-coa",
+            system_prompt_mode = system_prompt_mode,
             model_path=model_path,
             api_key=api_key,
             base_url=base_url,
@@ -174,6 +188,7 @@ class LatentCoaAgent(CoaAgent):
             LLM_backbone=LLM_backbone,VLM_backbone=VLM_backbone,tokenizer_path=tokenizer_path,
             **kwargs
         )
+        
         self._action_type = "agent"
         
         if not LLM_backbone:
@@ -182,6 +197,12 @@ class LatentCoaAgent(CoaAgent):
         else:
             self.LLM_backbone = LLM_backbone
             self.VLM_backbone = VLM_backbone
+            
+        if self.LLM_backbone in {"llama-3","llama-2","qwen2_vl"}:
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                tokenizer_path,  
+                trust_remote_code=True,
+            )
                 
         self.action_tokenizer = action_mapping.OneActionTokenizer(tokenizer_type=self.LLM_backbone)
     
@@ -190,8 +211,13 @@ class LatentCoaAgent(CoaAgent):
         image = self.processor_wrapper.create_image_input(observations[0]) 
         instruction = self.create_restruct_instruction(instructions[0])
         
+        if self.system_prompt:
+            messages.append(self.processor_wrapper.create_system_prompt(system_prompt=self.system_prompt))
         messages.append(self.processor_wrapper.create_message_vllm(role="user",input_type="image",prompt=[instruction],image=[image]))
-        outputs,content = self.generate(messages=messages,verbos=verbos)
+        
+        if_token_ids = True if self.use_vllm and self.LLM_backbone in {"qwen2_vl","llama-2","llama-3"} else False
+        outputs,content = self.generate(messages=messages,verbos=verbos,if_token_ids=if_token_ids)
+
         if verbos:
             print(content)
         
@@ -204,9 +230,13 @@ class RawActionCoaAgent(CoaAgent):
     def __init__(self, 
                  model_path, base_url, api_key="EMPTY",
                  temperature=0.5,max_tokens=1024,
+                 system_prompt_mode = "",
                  **kwargs):
         super().__init__(
+            agent_mode="raw-action-coa",
+            system_prompt_mode=system_prompt_mode,
             api_key=api_key,
+            model_path=model_path,
             base_url=base_url,
             temperature=temperature,
             max_tokens=max_tokens,

@@ -3,7 +3,8 @@ from minestudio.simulator.entry import MinecraftSim
 from minestudio.simulator.callbacks.callback import MinecraftCallback
 
 class Agent(abc.ABC):
-    def __init__(self,**kwargs):
+    def __init__(self,agent_mode,**kwargs):
+        self.agent_mode = agent_mode
         self._action_type = "agent"
     
     @abc.abstractmethod

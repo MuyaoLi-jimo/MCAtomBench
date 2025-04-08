@@ -10,7 +10,7 @@ def make_agent(agent_mode:Literal["rt2","coa","raw-action-coa","latent-coa"]=Non
     elif agent_mode == "coa" or agent_mode == "raw-action-coa":
         agent = RawActionCoaAgent(**model_config)
     elif agent_mode == "latent-coa":
-        agent = RawActionCoaAgent(**model_config)
+        agent = LatentCoaAgent(**model_config)
     else:
         raise AssertionError(f"agent mode-{agent_mode} unknown")
     return agent
