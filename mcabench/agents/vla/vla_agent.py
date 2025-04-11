@@ -64,7 +64,6 @@ class RT2AGENT(vlm_client.VlMClient,base_agent.Agent):
         
         self.model_path = model_path
         
-            
         if self.LLM_backbone in {"llama-3","llama-2","qwen2_vl"}:
             self.tokenizer = AutoTokenizer.from_pretrained(
                 tokenizer_path,  
@@ -103,7 +102,7 @@ class RT2AGENT(vlm_client.VlMClient,base_agent.Agent):
         else:
             instruction = self.rule_based_instruction(env_prompt)
 
-        if instruction.strip()[-1] != '.':
+        if instruction.strip() and instruction.strip()[-1] != '.':
             instruction += ". \n"
         instruction += "\n"
         return instruction

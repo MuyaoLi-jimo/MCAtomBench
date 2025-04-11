@@ -357,5 +357,5 @@ def get_useful(test_types:list,separate_num:int=7):
     
 if __name__ == "__main__":
     
-    create_config(test_type="mine")
-    get_useful(test_types=["kill","mine"],separate_num=4)
+    #create_config(test_type="mine")
+    get_useful(test_types=["craft","smelt"],separate_num=1)

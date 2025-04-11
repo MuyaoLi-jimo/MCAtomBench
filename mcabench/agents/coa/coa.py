@@ -59,7 +59,7 @@ class CoaAgent(vlm_client.VlMClient,base_agent.Agent):
         else:
             instruction = self.rule_based_instruction(raw_instruction)
 
-        if instruction.strip()[-1] != '.':
+        if instruction.strip() and instruction.strip()[-1] != '.':
             instruction += ". \n"
         instruction += "\n"
         return instruction
